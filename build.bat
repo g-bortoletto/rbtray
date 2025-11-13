@@ -21,7 +21,7 @@ if "%MODE%"=="" set "MODE=release"
 if "%ARCH%"=="" set "ARCH=x86"
 
 :: Normalize input
-set "MODE=%MODE:~0,1%"
+if not "%MODE%"=="" set "MODE=%MODE:~0,1%"
 if /i "%MODE%"=="d" set "MODE=debug"
 if /i "%MODE%"=="r" set "MODE=release"
 
@@ -49,10 +49,18 @@ if not defined VSINSTALLDIR (
 :: Initialize VS environment
 if /i "%ARCH%"=="x64" (
     call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat" >nul
+    if errorlevel 1 (
+        echo ERROR: Failed to initialize Visual Studio x64 build environment.
+        exit /b 1
+    )
     set "OUTDIR=x64"
     set "MACHINE=X64"
 ) else (
     call "%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars32.bat" >nul
+    if errorlevel 1 (
+        echo ERROR: Failed to initialize Visual Studio x86 build environment.
+        exit /b 1
+    )
     set "OUTDIR=x86"
     set "MACHINE=X86"
 )
@@ -78,7 +86,11 @@ set "RC_FLAGS=/nologo"
 if /i "%MODE%"=="debug" (
     :: Debug mode: No optimization, debug info, runtime checks
     set "CL_FLAGS=/Od /Zi /RTC1 /D_DEBUG /MTd"
-    set "LINK_FLAGS=/DEBUG /INCREMENTAL"
+if not exist "%OUTDIR%" mkdir "%OUTDIR%"
+if errorlevel 1 (
+    echo ERROR: Failed to create output directory
+    exit /b 1
+)
 ) else (
     :: Release mode: Maximum optimization, intrinsics, PDB for debugging
     set "CL_FLAGS=/O2 /Oi /GL /Gy /DNDEBUG /MT"
@@ -157,11 +169,18 @@ echo [RBTray Build] RBTray.exe compiled successfully.
 echo.
 
 :: ============================================================================
-:: Summary
-:: ============================================================================
-
+echo Output files:
+dir /B "%OUTDIR%\RBTray.exe" "%OUTDIR%\RBHook.dll"
+if not exist "%OUTDIR%\RBTray.exe" (
+    echo WARNING: RBTray.exe not found in %OUTDIR%!
+)
+if not exist "%OUTDIR%\RBHook.dll" (
+    echo WARNING: RBHook.dll not found in %OUTDIR%!
+)
+echo.
+echo Build mode: %MODE%
+echo Architecture: %ARCH%
 echo ============================================================================
-echo Build completed successfully!
 echo ============================================================================
 echo Output directory: %OUTDIR%\
 echo.
