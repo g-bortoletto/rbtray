@@ -13,7 +13,6 @@ to be minimized to the system tray by:
 
 - Right-clicking its minimize button
 - Shift-right-clicking its title bar
-- Using the Control-Alt-Down hotkey
 
 Not all of these methods will work for every window, so please use whichever
 method works best for your needs. Also note that some types of windows can not
@@ -56,10 +55,6 @@ select **Restore Window**.
 
 In some cases, the first two methods cause problems with other software because
 of they way they integrate into Windows using a hook to intercept mouse events.
-In these cases, you can use the `--no-hook` option, which means that only the
-last method of using the Control-Alt-Down hotkey will work. Also in this case
-the RBHook.dll isn't needed since it only exists to support the mouse event
-hook.
 
 ## Exiting
 
