@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Change history
 
+## [4.14.3] fork (2025-Nov-21) - g-bortoletto
+
+- Add GitHub Actions workflow for automated releases.
+- Add WiX-based MSI installers for both x86 and x64.
+- Automated release packaging with ZIP archives.
+
 ## [4.14] fork (2022-Mar-20) - Benbuck Nason
 
 - Change hotkey to Control-Alt-Down for simplicity and compatibility.
@@ -94,7 +100,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Won't minimize MDI child windows.
 - Other small fixes and reorganized code.
 
-[unreleased]: https://github.com/benbuck/rbtray/compare/v4.14...HEAD
+[unreleased]: https://github.com/g-bortoletto/rbtray/compare/v4.14.3...HEAD
+[4.14.3]: https://github.com/g-bortoletto/rbtray/compare/v4.14...v4.14.3
 [4.14]: https://github.com/benbuck/rbtray/compare/v4.13...v4.14
 [4.13]: https://github.com/benbuck/rbtray/compare/v4.12...v4.13
 [4.12]: https://github.com/benbuck/rbtray/compare/v4.11...v4.12
