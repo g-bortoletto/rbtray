@@ -48,7 +48,6 @@ To minimize a program to the system tray, you can use any of these methods:
 
 - Right-click with the mouse on the program's minimize button.
 - Hold down a Shift key while right-clicking on the program's title bar.
-- Pressing Control-Alt-Down on the keyboard (all at the same time).
 
 This should create an icon for the window in the system tray. To restore the
 program's window, single-click the program's icon in the tray. Alternatively,
