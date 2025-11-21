@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="RBTray"
+           Version="$(var.Version)"
+           Manufacturer="RBTray Contributors"
+           UpgradeCode="E5C7E1A0-2B4F-4B9D-8A3C-1D2E3F4A5B6C"
+           Language="1033">
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of RBTray is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="RBTray" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+
+    <Icon Id="RBTrayIcon" SourceFile="$(var.SourceDir)\RBTray.exe" />
+    <Property Id="ARPPRODUCTICON" Value="RBTrayIcon" />
+    <Property Id="ARPHELPLINK" Value="https://github.com/g-bortoletto/rbtray" />
+
+    <StandardDirectory Id="ProgramFilesFolder">
+      <Directory Id="INSTALLFOLDER" Name="RBTray" />
+    </StandardDirectory>
+  </Package>
+
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="RBTrayExe" Guid="F6D8E2B1-3C5F-4C8E-9B2D-1E3F4A5B6C7D">
+        <File Id="RBTrayExe" Source="$(var.SourceDir)\RBTray.exe" KeyPath="yes">
+          <Shortcut Id="StartMenuShortcut"
+                    Directory="ProgramMenuFolder"
+                    Name="RBTray"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Icon="RBTrayIcon"
+                    Advertise="yes" />
+        </File>
+        <RegistryValue Root="HKCU"
+                       Key="Software\Microsoft\Windows\CurrentVersion\Run"
+                       Name="RBTray"
+                       Value="[INSTALLFOLDER]RBTray.exe"
+                       Type="string"
+                       KeyPath="no" />
+      </Component>
+
+      <Component Id="RBHookDll" Guid="G7E9F3C2-4D6A-5D9F-AC3E-2F4A5B6C7D8E">
+        <File Id="RBHookDll" Source="$(var.SourceDir)\RBHook.dll" KeyPath="yes" />
+      </Component>
+
+      <Component Id="License" Guid="H8FAE4D3-5E7B-6EAF-BD4F-3A5B6C7D8E9F">
+        <File Id="LicenseTxt" Source="LICENSE.txt" KeyPath="yes" />
+      </Component>
+
+      <Component Id="Readme" Guid="I9FBF5E4-6F8C-7FBA-CE5A-4B6C7D8E9FAB">
+        <File Id="ReadmeMd" Source="README.md" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>
